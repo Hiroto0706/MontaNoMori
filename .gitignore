@@ -1,6 +1,10 @@
 .DS_Store
 node_modules
 /dist
+cors.json
+kinetic-highway-384600-6edea495627a.json
+jsonconfig.json
+config.ini
 
 
 # local env files

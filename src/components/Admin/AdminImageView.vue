@@ -1,20 +1,16 @@
 <template>
   <v-container>
     <h1 class="my-10 pl-3 pb-3 text-h4 font-weight-bold page__title">
-      {{ $store.state.title }}
+      画像一覧
     </h1>
-    <v-row v-if="$store.state.images === null"
-      ><v-col class="my-5">画像が見つかりませんでした</v-col></v-row
-    >
-    <v-row v-else>
-      <v-col cols="3" v-for="image in $store.state.images" :key="image.id">
+    <v-row>
+      <v-col cols="3" v-for="image in images" :key="image.id">
         <router-link
-          :to="'/' + image.id"
+          :to="'/admin/' + image.id"
           class="router-link-style"
           style="color: black"
         >
           <v-card class="pa-10" flat>
-            <!-- <img src="@/assets/otanjoubi.png" /> -->
             <img :src="image.url_path" />
           </v-card>
         </router-link>
@@ -24,12 +20,9 @@
               :to="'/' + image.id"
               class="router-link-style"
               style="color: black"
-              >{{ image.title }}</router-link
+              >{{ image.id }}. {{ image.title }}</router-link
             >
           </p>
-          <v-btn icon class="ml-auto">
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
         </div>
       </v-col>
     </v-row>
@@ -37,23 +30,24 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "HelloWorld",
   data() {
-    return {};
+    return {
+      images: [],
+    };
   },
   mounted() {
-    console.log(this.$store.state.mode);
-  },
-  computed: {
-    tags() {
-      return this.$store.state.tags;
-    },
-  },
-  methods: {
-    changeTextColor() {
-      this.$refs.cardTitle.style.color = "red";
-    },
+    axios
+      .get("http://localhost:8000/")
+      .then((response) => {
+        this.images = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
