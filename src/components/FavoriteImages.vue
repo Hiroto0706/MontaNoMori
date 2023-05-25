@@ -1,15 +1,20 @@
 <template>
   <v-container>
     <h1 class="my-10 pl-3 pb-3 text-h4 font-weight-bold page__title">
-      {{ $store.state.title }}
+      お気に入りたち
     </h1>
-    <v-row v-if="$store.state.images === null"
+    <v-row v-if="$store.state.images === null || storedIDs.length === 0"
       ><v-col class="mt-5 mb-8 font-weight-bold"
-        >画像が見つかりませんでした</v-col
+        >お気に入りの画像はまだないよ！</v-col
       ></v-row
     >
     <v-row v-else>
-      <v-col cols="3" v-for="image in $store.state.images" :key="image.id">
+      <v-col
+        cols="3"
+        v-for="image in $store.state.images"
+        :key="image.id"
+        v-show="isFavorite(image.id)"
+      >
         <router-link
           :to="'/' + image.id"
           class="router-link-style"
@@ -42,7 +47,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "FavoriteImages",
   data() {
     return {
       storedIDs: [],

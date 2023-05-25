@@ -1,0 +1,12 @@
+<template>
+  <v-container>
+    名前
+    <v-spacer></v-spacer>
+    メアド
+    <v-spacer></v-spacer>
+    題名
+    <v-spacer></v-spacer>
+    内容
+    <v-spacer></v-spacer>
+  </v-container>
+</template>

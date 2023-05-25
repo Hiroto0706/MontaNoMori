@@ -5,9 +5,18 @@
 
       <!-- このサイトについてのフッター -->
       <v-card-text class="px-10 black--text d-flex">
-        <div class="mr-8 font-weight-bold a_tag">もんたのフリイラについて</div>
-        <div class="mr-8 font-weight-bold a_tag">よくある質問</div>
-        <div class="mr-8 font-weight-bold a_tag">お問い合わせ</div>
+        <router-link
+          to="/about"
+          class="mr-8 font-weight-bold a_tag black--text"
+          style="text-decoration: none"
+          >もんたのフリイラについて</router-link
+        >
+        <router-link
+          to="/about"
+          class="mr-8 font-weight-bold a_tag black--text"
+          style="text-decoration: none"
+          >お問い合わせ</router-link
+        >
 
         <v-spacer></v-spacer>
 

@@ -3,8 +3,11 @@ import VueRouter from "vue-router";
 import store from "./store";
 
 import HelloWorld from "./components/HelloWorld";
+import FavoriteImages from "./components/FavoriteImages";
 import DetailImage from "./components/DetailImage";
 import LoginPage from "./components/LoginPage";
+import AboutMe from "./components/AboutMe";
+import ContactPage from "./components/ContactPage";
 
 import AdminPage from "./components/Admin/AdminPage";
 import NewImageComponent from "./components/Admin/NewImageComponent";
@@ -44,6 +47,29 @@ const routes = [
     },
   },
   {
+    path: "/favorite",
+    name: "favorite",
+    components: {
+      default: FavoriteImages,
+      header: HeaderComponent,
+      footer: FooterComponent,
+    },
+    beforeEnter: (to, from, next) => {
+      // ルート遷移前にアクションをディスパッチする
+      store
+        .dispatch("getImages")
+        .then(() => {
+          // アクションの処理が完了したらルート遷移を続ける
+          next();
+        })
+        .catch((error) => {
+          // エラーが発生した場合は、ルート遷移を中止する
+          console.error(error);
+          next(false);
+        });
+    },
+  },
+  {
     path: "/search",
     name: "search",
     components: {
@@ -52,7 +78,6 @@ const routes = [
       footer: FooterComponent,
     },
     beforeEnter: (to, from, next) => {
-      console.log(to.query.q);
       store
         .dispatch("searchItems", to.query.q)
         .then(() => {
@@ -222,6 +247,24 @@ const routes = [
     name: "detail",
     components: {
       default: DetailImage,
+      header: HeaderComponent,
+      footer: FooterComponent,
+    },
+  },
+  {
+    path: "/about",
+    name: "about",
+    components: {
+      default: AboutMe,
+      header: HeaderComponent,
+      footer: FooterComponent,
+    },
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    components: {
+      default: ContactPage,
       header: HeaderComponent,
       footer: FooterComponent,
     },

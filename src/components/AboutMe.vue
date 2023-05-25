@@ -1,0 +1,11 @@
+<template>
+  <v-container
+    >これはOK
+    <v-spacer></v-spacer>
+    これはNG
+    <v-spacer></v-spacer>
+    もんたの森について
+    <v-spacer></v-spacer>
+    よくある質問
+  </v-container>
+</template>

@@ -1,8 +1,16 @@
 <template>
   <v-container>
     <!-- 画像のタイトル -->
-    <h1 v-if="image.title" class="image__title mb-5 pb-2">
-      {{ image.title }}
+    <h1 v-if="image.title" class="image__title mb-5 pb-2 d-flex">
+      <span>{{ image.title }}</span>
+      <v-spacer></v-spacer>
+      <v-btn icon x-large>
+        <v-icon
+          @click="favorite(image.id)"
+          :color="isFavorite(image.id) ? 'red lighten-1' : ''"
+          >mdi-heart</v-icon
+        >
+      </v-btn>
     </h1>
     <h1 v-else class="image__title mb-5 pb-2" style="color: gray">
       画像タイトル
@@ -133,9 +141,6 @@
     </div>
 
     <!-- おすすめ画像 -->
-    <!-- <h1 class="py-10 ml-3 text-h4 font-weight-bold">
-      ほかにもこんな仲間たちがいます
-    </h1> -->
     <h1 class="others__title mb-5 pb-2">ほかにもこんな仲間たちがいます</h1>
     <v-row class="featured-image__content">
       <v-col cols="3" v-for="image in images.slice(0, 8)" :key="image.id">
@@ -158,7 +163,11 @@
             >
           </p>
           <v-btn icon class="ml-auto">
-            <v-icon>mdi-heart</v-icon>
+            <v-icon
+              @click="favorite(image.id)"
+              :color="isFavorite(image.id) ? 'red lighten-1' : ''"
+              >mdi-heart</v-icon
+            >
           </v-btn>
         </div>
       </v-col>
@@ -179,11 +188,15 @@ export default {
       prev_image: [],
       next_image: [],
       imageTags: [],
+
+      storedIDs: [],
     };
   },
   mounted() {
     this.getImage();
     this.getImages();
+
+    this.storedIDs = JSON.parse(localStorage.getItem("favoriteIDs")) || [];
   },
   watch: {
     $route() {
@@ -260,7 +273,20 @@ export default {
       } catch (error) {
         console.error("画像のダウンロードに失敗しました。", error);
       }
-    }
+    },
+
+    // お気に入り機能
+    favorite(id) {
+      if (!this.storedIDs.includes(id)) {
+        this.storedIDs.push(id);
+      } else {
+        this.storedIDs = this.storedIDs.filter((item) => item !== id);
+      }
+      localStorage.setItem("favoriteIDs", JSON.stringify(this.storedIDs));
+    },
+    isFavorite(id) {
+      return this.storedIDs.includes(id);
+    },
   },
 };
 </script>

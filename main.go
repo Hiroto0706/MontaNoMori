@@ -18,12 +18,12 @@ func main() {
 	// Echoのインスタンスを作成
 	e := echo.New()
 
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:8080"},
-	}))
+	// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	// 	AllowOrigins: []string{"http://localhost:8080"},
+	// }))
 
 	// // CORS設定を有効にする
-	// e.Use(middleware.CORS())
+	e.Use(middleware.CORS())
 
 	// ルートの定義
 	e.GET("/", handler.GetImages)
