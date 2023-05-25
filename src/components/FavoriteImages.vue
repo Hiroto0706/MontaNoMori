@@ -5,7 +5,7 @@
     </h1>
     <v-row v-if="$store.state.images === null || storedIDs.length === 0"
       ><v-col class="mt-5 mb-8 font-weight-bold"
-        >自分だけのお気に入り画像をここに集めてね！</v-col
+        >お気に入りの画像はまだないよ！</v-col
       ></v-row
     >
     <v-row v-else>
