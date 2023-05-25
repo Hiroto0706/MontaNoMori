@@ -29,7 +29,7 @@
           <v-card-title class="text-h5 font-weight-bold pa-0 mb-3 black--text"
             >タグたち</v-card-title
           >
-          <div class="d-flex flex-wrap">
+          <v-card class="d-flex flex-wrap pa-2" outlined>
             <v-btn
               v-for="imageTag in imageTags"
               :key="imageTag.id"
@@ -40,7 +40,7 @@
             >
               # {{ imageTag.name }}
             </v-btn>
-          </div>
+          </v-card>
         </v-card-text>
 
         <!-- ひとこと -->
@@ -393,6 +393,7 @@ img {
   text-decoration: none;
   display: block;
   width: calc(50% - 20px);
+  transition: ease 0.1s;
 }
 
 .prev-next__content__link:hover {
