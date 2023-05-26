@@ -16,7 +16,6 @@
           style="color: black"
         >
           <v-card class="pa-10" flat>
-            <!-- <img src="@/assets/otanjoubi.png" /> -->
             <img :src="image.url_path" />
           </v-card>
         </router-link>

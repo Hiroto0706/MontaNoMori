@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="content pa-10">
+    <div class="content pa-10 my-10">
       <h1 class="content__title">ご利用規約</h1>
       <br />
       <p>
@@ -54,10 +54,10 @@
       </p>
       <div class="d-flex flex-column justify-end align-end">
         <v-img
+          src="@/assets/about-me.png"
           lazy-src="@/assets/about-me.png"
           max-height="300"
           max-width="300"
-          src="@/assets/about-me.png"
           aspect-ratio="1"
         ></v-img>
       </div>

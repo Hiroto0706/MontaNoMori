@@ -331,18 +331,7 @@ img {
   font-weight: bold;
 }
 
-/* .content__sub__btn-content__btn-png {
-  margin-right: 5px;
-} */
-
-/* .content__sub__btn-content__btn-jpg {
-  margin-left: 5px;
-} */
-
 .hitokoto {
-  /* width: calc(100% - 50px);
-  height: calc(100% - 250px); */
-  /* max-height: 350px; */
   position: relative;
 }
 
@@ -353,22 +342,6 @@ img {
   bottom: 0;
   left: 0px;
 }
-
-/* .hitokoto__fukidashi {
-  padding: 40px;
-  height: 100%;
-  border: 3px solid black;
-  border-radius: 20px;
-  background-color: white;
-  position: relative;
-}
-.hitokoto__fukidashi img {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 43%;
-  height: auto;
-} */
 
 /* 次の画像と前の画像 */
 .prev-next__content {
@@ -381,12 +354,6 @@ img {
   width: calc(50% - 20px);
   display: block;
 }
-/* .prev-next__content .prev {
-  margin-right: 20px;
-}
-.prev-next__content .next {
-  margin-left: 20px;
-} */
 
 .prev-next__content__link {
   color: black;
