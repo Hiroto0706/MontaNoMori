@@ -59,13 +59,6 @@ export default {
       search: "",
     };
   },
-  // mounted() {
-  //   const searchQuery = this.$route.query.q;
-  //   if (searchQuery != "") {
-  //     this.search = searchQuery;
-  //     this.searchItems();
-  //   }
-  // },
   methods: {
     async searchItems() {
       if (this.search == "") {

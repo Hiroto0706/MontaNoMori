@@ -54,6 +54,7 @@
           outlined
           ref="tag"
           persistent-hint
+          :rules="[rules.required]"
           @keydown.enter="PostImage(title, description, image, imageTags)"
           hint="タグを選択してください"
         ></v-select>

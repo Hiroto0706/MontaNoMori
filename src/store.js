@@ -49,10 +49,24 @@ export default new Vuex.Store({
     async searchItems({ commit }, target) {
       const data = new FormData();
       data.append("target", target);
-      console.log(target);
 
       await axios
         .get("http://localhost:8000/search", { params: { q: target } })
+        .then((response) => {
+          commit("SET_TITLE", "「" + target + "」" + "で検索");
+          commit("SET_MODE", "search");
+          commit("SET_IMAGES", response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async searchItemsForAdmin({ commit }, target) {
+      const data = new FormData();
+      data.append("target", target);
+
+      await axios
+        .get("http://localhost:8000/admin/search", { params: { q: target } })
         .then((response) => {
           commit("SET_TITLE", "「" + target + "」" + "で検索");
           commit("SET_MODE", "search");

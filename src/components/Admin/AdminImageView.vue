@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <h1 class="my-10 pl-3 pb-3 text-h4 font-weight-bold page__title">
-      画像一覧
+      {{ $store.state.title }}
     </h1>
     <v-row>
-      <v-col cols="3" v-for="image in images" :key="image.id">
+      <v-col cols="3" v-for="image in $store.state.images" :key="image.id">
         <router-link
           :to="'/admin/' + image.id"
           class="router-link-style"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "HelloWorld",
@@ -39,16 +39,16 @@ export default {
       images: [],
     };
   },
-  mounted() {
-    axios
-      .get("http://localhost:8000/")
-      .then((response) => {
-        this.images = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  // mounted() {
+  //   axios
+  //     .get("http://localhost:8000/")
+  //     .then((response) => {
+  //       this.images = response.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // },
 };
 </script>
 

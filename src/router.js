@@ -193,7 +193,48 @@ const routes = [
       axios
         .post("http://localhost:8000/login/check", data)
         .then(() => {
-          next();
+          store
+            .dispatch("getImages")
+            .then(() => {
+              // アクションの処理が完了したらルート遷移を続ける
+              next();
+            })
+            .catch((error) => {
+              // エラーが発生した場合は、ルート遷移を中止する
+              console.error(error);
+              next(false);
+            });
+        })
+        .catch(() => {
+          next("/login");
+        });
+    },
+  },
+  {
+    path: "/admin/images/search",
+    name: "search_a",
+    components: {
+      default: AdminImageView,
+      header: AdminHeaderComponent,
+      footer: AdminFooterComponent,
+    },
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token"); // TokenをlocalStorageから取得する
+      const data = new FormData();
+      data.append("token", token);
+
+      axios
+        .post("http://localhost:8000/login/check", data)
+        .then(() => {
+          store
+            .dispatch("searchItemsForAdmin", to.query.q)
+            .then(() => {
+              next();
+            })
+            .catch((error) => {
+              console.error(error);
+              next(false);
+            });
         })
         .catch(() => {
           next("/login");

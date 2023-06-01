@@ -5,7 +5,7 @@
 
       <!-- このサイトについてのフッター -->
       <v-card-text class="px-10 black--text d-flex">
-        <router-link
+        <!-- <router-link
           to="/about"
           class="mr-8 font-weight-bold a_tag black--text"
           style="text-decoration: none"
@@ -16,7 +16,7 @@
           class="mr-8 font-weight-bold a_tag black--text"
           style="text-decoration: none"
           >お問い合わせ</router-link
-        >
+        > -->
 
         <v-spacer></v-spacer>
 

@@ -16,14 +16,15 @@
 
     <!-- 検索欄 -->
     <v-text-field
-      v-model="search"
+      v-model.lazy="search"
       append-icon="mdi-magnify"
       outlined
       label="キーワード検索"
       hide-details
       color="black"
       class="cursor-pointer"
-      @click:append="searchItems"
+      @click:append="searchItems()"
+      @keydown.enter="searchItems()"
     ></v-text-field>
 
     <v-spacer></v-spacer>
@@ -70,8 +71,19 @@ export default {
     };
   },
   methods: {
-    searchItems() {
-      console.log("search!!");
+    async searchItems() {
+      if (this.search == "") {
+        return;
+      }
+
+      await this.$store
+        .dispatch("searchItemsForAdmin", this.search)
+        .then(() => {
+          this.$router.push({
+            name: "search_a",
+            query: { q: this.search },
+          });
+        });
     },
   },
 };

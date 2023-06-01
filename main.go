@@ -42,6 +42,7 @@ func main() {
 	admin.PUT("/edit/:id", handler.EditImage)
 	admin.DELETE("/delete/:id", handler.DeleteImage)
 	admin.GET("/tag/get", handler.GetTags)
+	admin.GET("/search", handler.SearchImages)
 
 	tag := admin.Group("/tag")
 	tag.POST("/new", handler.CreateTag)
