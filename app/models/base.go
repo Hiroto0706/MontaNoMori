@@ -35,7 +35,7 @@ func InitDB() {
 
 	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
 		id SERIAL PRIMARY KEY,
-		uuid VARCHAR(255) NOT NULL,
+		uuid VARCHAR(255),
 		name VARCHAR(255) NOT NULL,
 		email VARCHAR(255) NOT NULL UNIQUE,
 		password VARCHAR(255) NOT NULL,

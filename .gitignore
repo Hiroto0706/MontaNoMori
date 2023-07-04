@@ -5,6 +5,8 @@ cors.json
 kinetic-highway-384600-6edea495627a.json
 jsonconfig.json
 config.ini
+.gcloudignore
+app.yaml
 
 
 # local env files
