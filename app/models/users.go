@@ -15,7 +15,7 @@ type User struct {
 
 func GetUserById(id int) (user *User, err error) {
 	user = &User{}
-	cmd := `select id, uuid, name, email, password, created_at from users where id = $1`
+	cmd := `select id, uuid, name, email, password, created_at from users where id = ?`
 	err = Db.QueryRow(cmd, id).Scan(
 		&user.ID,
 		&user.UUID,
@@ -28,7 +28,7 @@ func GetUserById(id int) (user *User, err error) {
 }
 
 func GetUserByEmailAndPassword(email, password string) (user User, err error) {
-	cmd := `select id, uuid, name, email, password, created_at from users where email = $1 and password = $2`
+	cmd := `select id, uuid, name, email, password, created_at from users where email = ? and password = ?`
 	err = Db.QueryRow(cmd, email, password).Scan(
 		&user.ID,
 		&user.UUID,

@@ -142,7 +142,12 @@
 
     <!-- おすすめ画像 -->
     <h1 class="others__title mb-5 pb-2">ほかにもこんな仲間たちがいます</h1>
-    <v-row class="featured-image__content">
+    <v-row v-if="images.length == 0"
+      ><v-col class="mt-5 mb-8 font-weight-bold"
+        >他の仲間たちはいないみたい！</v-col
+      ></v-row
+    >
+    <v-row v-else class="featured-image__content">
       <v-col cols="3" v-for="image in images.slice(0, 8)" :key="image.id">
         <router-link
           :to="'/' + image.id"

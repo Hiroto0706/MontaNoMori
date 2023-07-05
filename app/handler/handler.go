@@ -140,7 +140,7 @@ func UploadImage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
-	_, err = models.ConnectPostgres(config.Config.User, config.Config.Password, config.Config.DbName)
+	_, err = models.ConnectSqlite()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}

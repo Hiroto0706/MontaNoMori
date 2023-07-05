@@ -7,11 +7,10 @@ import (
 )
 
 type ConfigList struct {
-	User     string
-	Password string
-	DbName   string
-	Json     string
-	Bucket   string
+	SQLDriver string
+	DbName    string
+	Json      string
+	Bucket    string
 }
 
 var Config ConfigList
@@ -27,10 +26,9 @@ func LoadConfig() {
 	}
 
 	Config = ConfigList{
-		User:     cfg.Section("db").Key("user").String(),
-		Password: cfg.Section("db").Key("password").String(),
-		DbName:   cfg.Section("db").Key("dbname").String(),
-		Json:     cfg.Section("gcs").Key("json").String(),
-		Bucket:   cfg.Section("gcs").Key("bucket").String(),
+		SQLDriver: cfg.Section("db").Key("driver").String(),
+		DbName:    cfg.Section("db").Key("name").String(),
+		Json:      cfg.Section("gcs").Key("json").String(),
+		Bucket:    cfg.Section("gcs").Key("bucket").String(),
 	}
 }

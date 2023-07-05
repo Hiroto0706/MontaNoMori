@@ -18,7 +18,7 @@ func CreateImageTag(image_id, tag_id int) error {
 		image_id,
 		tag_id,
 		updated_at,
-		created_at) values ($1, $2, $3, $4)`
+		created_at) values (?, ?, ?, ?)`
 
 	_, err = Db.Exec(cmd, image_id, tag_id, time.Now(), time.Now())
 	if err != nil {
@@ -29,7 +29,7 @@ func CreateImageTag(image_id, tag_id int) error {
 }
 
 func GetImageTagIDFromImageID(image_id int) (image_tags []Image_Tags, err error) {
-	cmd := `select id, image_id, tag_id, updated_at, created_at from image_tags where image_id = $1 order by image_id desc`
+	cmd := `select id, image_id, tag_id, updated_at, created_at from image_tags where image_id = ? order by image_id desc`
 	rows, err := Db.Query(cmd, image_id)
 	if err != nil {
 		log.Println(err)
@@ -55,7 +55,7 @@ func GetImageTagIDFromImageID(image_id int) (image_tags []Image_Tags, err error)
 	return image_tags, err
 }
 func GetImageTagIDFromTagID(tag_id int) (image_tags []Image_Tags, err error) {
-	cmd := `select id, image_id, tag_id, updated_at, created_at from image_tags where tag_id = $1 order by image_id desc`
+	cmd := `select id, image_id, tag_id, updated_at, created_at from image_tags where tag_id = ? order by image_id desc`
 	rows, err := Db.Query(cmd, tag_id)
 	if err != nil {
 		log.Println(err)
@@ -82,7 +82,7 @@ func GetImageTagIDFromTagID(tag_id int) (image_tags []Image_Tags, err error) {
 }
 
 func DeleteAllImageTagsByImageID(id int) (err error) {
-	cmd := `delete from image_tags where image_id = $1`
+	cmd := `delete from image_tags where image_id = ?`
 	_, err = Db.Exec(cmd, id)
 	if err != nil {
 		log.Fatalln(err)
@@ -92,7 +92,7 @@ func DeleteAllImageTagsByImageID(id int) (err error) {
 }
 
 func DeleteAllImageTagsByTagID(id int) (err error) {
-	cmd := `delete from image_tags where tag_id = $1`
+	cmd := `delete from image_tags where tag_id = ?`
 	_, err = Db.Exec(cmd, id)
 	if err != nil {
 		log.Fatalln(err)

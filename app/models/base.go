@@ -6,12 +6,13 @@ import (
 	"log"
 	"todo/config"
 
-	_ "github.com/lib/pq"
+	_ "github.com/mattn/go-sqlite3"
 )
 
-var Db *sql.DB
-
-var err error
+var (
+	Db  *sql.DB
+	err error
+)
 
 const (
 	tableNameUser      = "users"
@@ -21,82 +22,57 @@ const (
 )
 
 func InitDB() {
-	name := config.Config.User
-	password := config.Config.Password
-	dbname := config.Config.DbName
-
-	connStr := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", name, password, dbname)
-
-	Db, err = sql.Open("postgres", connStr)
+	Db, err = ConnectSqlite()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
-	// defer Db.Close()
 
 	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-		id SERIAL PRIMARY KEY,
-		uuid VARCHAR(255),
-		name VARCHAR(255) NOT NULL,
-		email VARCHAR(255) NOT NULL UNIQUE,
-		password VARCHAR(255) NOT NULL,
-		created_at TIMESTAMP DEFAULT NOW())`, tableNameUser)
+		id INTEGER PRIMARY KEY,
+		uuid TEXT,
+		name TEXT NOT NULL,
+		email TEXT NOT NULL UNIQUE,
+		password TEXT NOT NULL,
+		created_at datetime)`, tableNameUser)
 
-	_, err = Db.Exec(cmdU)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	Db.Exec(cmdU)
 
 	cmdI := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-		id SERIAL PRIMARY KEY,
-		title VARCHAR(255),
-		description VARCHAR(255),
-		url_path VARCHAR(255),
-		updated_at TIMESTAMP DEFAULT NOW(),
-		created_at TIMESTAMP DEFAULT NOW())`, tableNameImage)
+		id INTEGER PRIMARY KEY,
+		title TEXT,
+		description TEXT,
+		url_path TEXT,
+		updated_at datetime,
+		created_at datetime)`, tableNameImage)
 
-	_, err = Db.Exec(cmdI)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	Db.Exec(cmdI)
 
 	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(255),
-		updated_at TIMESTAMP DEFAULT NOW(),
-		created_at TIMESTAMP DEFAULT NOW())`, tableNameTag)
+		id INTEGER PRIMARY KEY,
+		name TEXT,
+		updated_at datetime,
+		created_at datetime)`, tableNameTag)
 
-	_, err = Db.Exec(cmdT)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	Db.Exec(cmdT)
 
 	cmdIT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-		id SERIAL PRIMARY KEY,
-		image_id INTEGER REFERENCES images(id),
-		tag_id INTEGER REFERENCES tags(id),
-		UNIQUE(image_id, tag_id),
-		updated_at TIMESTAMP DEFAULT NOW(),
-		created_at TIMESTAMP DEFAULT NOW())`, tableNameImageTags)
+		id INTEGER PRIMARY KEY,
+		image_id INTEGER,
+		tag_id INTEGER,
+		updated_at datetime,
+		created_at datetime,
+		FOREIGN KEY (image_id) REFERENCES images(id),
+		FOREIGN KEY (tag_id) REFERENCES tags(id),
+		UNIQUE(image_id, tag_id))`, tableNameImageTags)
 
-	_, err = Db.Exec(cmdIT)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	Db.Exec(cmdIT)
 }
 
-func ConnectPostgres(user, password, dbname string) (*sql.DB, error) {
-	connStr := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
-	db, err := sql.Open("postgres", connStr)
+func ConnectSqlite() (*sql.DB, error) {
+	db, err := sql.Open(config.Config.SQLDriver, config.Config.DbName)
 	if err != nil {
-		return nil, err
+		log.Fatalln(err)
 	}
-	err = db.Ping()
-	if err != nil {
-		return nil, err
-	}
+
 	return db, err
 }

@@ -26,7 +26,7 @@ func CreateImage(title, description, url_path string) error {
 		description,
 		url_path,
 		updated_at,
-		created_at) values ($1, $2, $3, $4, $5)`
+		created_at) values (?, ?, ?, ?, ?)`
 
 	_, err = Db.Exec(cmd, title, description, url_path, time.Now(), time.Now())
 	if err != nil {
@@ -68,7 +68,7 @@ func GetImagePaths() (images []Image, err error) {
 // 画像のURLを取得する処理
 func GetImagePath(id int) (image Image, err error) {
 	image = Image{}
-	cmd := `select id, title, description, url_path, updated_at, created_at from images  where id = $1`
+	cmd := `select id, title, description, url_path, updated_at, created_at from images  where id = ?`
 	err = Db.QueryRow(cmd, id).Scan(
 		&image.ID,
 		&image.Title,
@@ -84,7 +84,7 @@ func GetImagePath(id int) (image Image, err error) {
 }
 func GetNextImagePath(id int) (image Image, err error) {
 	image = Image{}
-	cmd := `select id, title, description, url_path, updated_at, created_at from images  WHERE id > $1 ORDER BY id ASC LIMIT 1`
+	cmd := `select id, title, description, url_path, updated_at, created_at from images  WHERE id > ? ORDER BY id ASC LIMIT 1`
 	err = Db.QueryRow(cmd, id).Scan(
 		&image.ID,
 		&image.Title,
@@ -100,7 +100,7 @@ func GetNextImagePath(id int) (image Image, err error) {
 }
 func GetPrevImagePath(id int) (image Image, err error) {
 	image = Image{}
-	cmd := `select id, title, description, url_path, updated_at, created_at from images  WHERE id < $1 ORDER BY id DESC LIMIT 1`
+	cmd := `select id, title, description, url_path, updated_at, created_at from images  WHERE id < ? ORDER BY id DESC LIMIT 1`
 	err = Db.QueryRow(cmd, id).Scan(
 		&image.ID,
 		&image.Title,
@@ -117,7 +117,7 @@ func GetPrevImagePath(id int) (image Image, err error) {
 
 func GetImageByImagePath(path string) (image Image, err error) {
 	image = Image{}
-	cmd := `select id, title, description, url_path, updated_at, created_at from images  where url_path = $1`
+	cmd := `select id, title, description, url_path, updated_at, created_at from images  where url_path = ?`
 	err = Db.QueryRow(cmd, path).Scan(
 		&image.ID,
 		&image.Title,
@@ -133,7 +133,7 @@ func GetImageByImagePath(path string) (image Image, err error) {
 }
 
 func (i *Image) UpdateImage() (err error) {
-	cmd := `update images set title = $1, description = $2, url_path = $3, updated_at = $4 where id = $5`
+	cmd := `update images set title = ?, description = ?, url_path = ?, updated_at = ? where id = ?`
 	_, _ = Db.Exec(cmd, i.Title, i.Description, i.URLPath, time.Now(), i.ID)
 	if err != nil {
 		return
@@ -148,7 +148,7 @@ func (i *Image) DeleteImage() (err error) {
 		log.Fatalln(err)
 	}
 
-	cmd := `delete from images where id = $1`
+	cmd := `delete from images where id = ?`
 	_, err = Db.Exec(cmd, i.ID)
 	if err != nil {
 		log.Fatalln(err)
@@ -158,7 +158,7 @@ func (i *Image) DeleteImage() (err error) {
 }
 
 func SearchImages(target string) (images []Image, err error) {
-	cmd := `select id, title, description, url_path, updated_at, created_at from images where title LIKE '%' || $1 || '%' or description LIKE '%' || $1 || '%' order by id`
+	cmd := `select id, title, description, url_path, updated_at, created_at from images where title LIKE '%' || ? || '%' or description LIKE '%' || ? || '%' order by id`
 	rows, err := Db.Query(cmd, target)
 	if err != nil {
 		log.Println(err)

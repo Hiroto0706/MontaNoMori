@@ -16,7 +16,7 @@ func CreateTag(name string) error {
 	cmd := `insert into tags (
 		name,
 		updated_at,
-		created_at) values ($1, $2, $3)`
+		created_at) values (?, ?, ?)`
 
 	_, err = Db.Exec(cmd, name, time.Now(), time.Now())
 	if err != nil {
@@ -54,7 +54,7 @@ func GetTags() (tags []Tag, err error) {
 
 func GetTag(id int) (tag Tag, err error) {
 	tag = Tag{}
-	cmd := `select id, name, updated_at, created_at from tags  where id = $1`
+	cmd := `select id, name, updated_at, created_at from tags  where id = ?`
 	err = Db.QueryRow(cmd, id).Scan(
 		&tag.ID,
 		&tag.Name,
@@ -69,7 +69,7 @@ func GetTag(id int) (tag Tag, err error) {
 
 func GetTagByTagName(name string) (tag Tag, err error) {
 	tag = Tag{}
-	cmd := `select id, name, updated_at, created_at from tags  where name = $1`
+	cmd := `select id, name, updated_at, created_at from tags  where name = ?`
 	err = Db.QueryRow(cmd, name).Scan(
 		&tag.ID,
 		&tag.Name,
@@ -83,7 +83,7 @@ func GetTagByTagName(name string) (tag Tag, err error) {
 }
 
 func (t *Tag) UpdateTag() (err error) {
-	cmd := `update tags set name = $1, updated_at = $2 where id = $3`
+	cmd := `update tags set name = ?, updated_at = ? where id = ?`
 	_, _ = Db.Exec(cmd, t.Name, time.Now(), t.ID)
 	if err != nil {
 		return err
@@ -98,7 +98,7 @@ func (t *Tag) DeleteTag() (err error) {
 		log.Fatalln(err)
 	}
 
-	cmd := `delete from tags where id = $1`
+	cmd := `delete from tags where id = ?`
 	_, err = Db.Exec(cmd, t.ID)
 	if err != nil {
 		return err
