@@ -338,7 +338,8 @@ img {
 .hitokoto img {
   position: absolute;
   width: 30%;
-  min-width: 100px;
+  min-width: 80px;
+  max-width: 150px;
   bottom: 0;
   left: 0px;
 }

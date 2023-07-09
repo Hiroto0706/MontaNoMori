@@ -15,7 +15,7 @@
     <v-spacer></v-spacer>
 
     <!-- 検索欄 -->
-    <v-text-field
+    <!-- <v-text-field
       v-model.lazy="search"
       append-icon="mdi-magnify"
       outlined
@@ -27,7 +27,7 @@
       @keydown.enter="searchItems()"
     ></v-text-field>
 
-    <v-spacer></v-spacer>
+    <v-spacer></v-spacer> -->
 
     <!-- タブ -->
     <v-btn
